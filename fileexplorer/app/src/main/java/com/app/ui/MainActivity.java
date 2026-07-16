@@ -1,5 +1,6 @@
 package com.app.ui;
 
+import com.app.R;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;

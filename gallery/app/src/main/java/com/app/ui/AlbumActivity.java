@@ -1,5 +1,6 @@
 package com.app.ui;
 
+import com.app.R;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;

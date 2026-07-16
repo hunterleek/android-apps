@@ -2,6 +2,7 @@ package com.app.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
+import com.app.R;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 

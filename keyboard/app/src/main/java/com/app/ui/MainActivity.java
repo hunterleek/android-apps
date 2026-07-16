@@ -1,5 +1,6 @@
 package com.app.ui;
 
+import com.app.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;

@@ -1,5 +1,6 @@
 package com.app.adapter;
 
+import com.app.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

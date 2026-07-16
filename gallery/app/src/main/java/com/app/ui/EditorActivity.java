@@ -1,5 +1,6 @@
 package com.app.ui;
 
+import com.app.R;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;

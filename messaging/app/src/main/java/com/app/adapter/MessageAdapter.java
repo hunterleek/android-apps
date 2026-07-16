@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.app.R;
 import com.app.model.Message;
 import java.text.SimpleDateFormat;
 import java.util.Date;
