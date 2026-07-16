@@ -13,20 +13,33 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+      
     - name: Build All APKs
       run: |
         mkdir -p apks
         for app in messaging calling gallery fileexplorer keyboard; do
           echo "=== Building $app ==="
           cd $app
-          gradle assembleDebug || echo "Failed: $app"
+          
+          # Use gradle wrapper if exists, otherwise use gradle
+          if [ -f gradlew ]; then
+            ./gradlew assembleDebug
+          else
+            gradle assembleDebug
+          fi
+          
+          # Copy APKs
           find app/build/outputs -name "*.apk" -exec cp {} ../apks/ \; 2>/dev/null || true
           cd ..
         done
+        echo "=== APKs built ==="
         ls -la apks/ || echo "No APKs found"
         
     - name: Upload APKs
       uses: actions/upload-artifact@v4
+      if: always()
       with:
         name: android-apps-debug
         path: apks/*.apk
