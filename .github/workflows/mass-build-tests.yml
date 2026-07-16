@@ -1,0 +1,2246 @@
+name: Mass Build Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-messaging-001:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-001
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-001:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-001
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-001:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-001
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-001:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-001
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-001:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-001
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-002:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd messaging && ./gradlew lintDebug --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-002
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-002:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd calling && ./gradlew lintDebug --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-002
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-002:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd gallery && ./gradlew lintDebug --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-002
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-002:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd fileexplorer && ./gradlew lintDebug --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-002
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-002:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd keyboard && ./gradlew lintDebug --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-002
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-003:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd messaging && ./gradlew dependencies --configuration debugRuntimeClasspath --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-003
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-003:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd calling && ./gradlew dependencies --configuration debugRuntimeClasspath --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-003
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-003:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd gallery && ./gradlew dependencies --configuration debugRuntimeClasspath --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-003
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-003:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd fileexplorer && ./gradlew dependencies --configuration debugRuntimeClasspath --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-003
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-003:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd keyboard && ./gradlew dependencies --configuration debugRuntimeClasspath --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-003
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-004:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd messaging && ./gradlew assembleRelease --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-004
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-004:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd calling && ./gradlew assembleRelease --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-004
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-004:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd gallery && ./gradlew assembleRelease --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-004
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-004:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd fileexplorer && ./gradlew assembleRelease --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-004
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-004:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd keyboard && ./gradlew assembleRelease --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-004
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-005:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd messaging && ./gradlew testDebugUnitTest --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-005
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-005:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd calling && ./gradlew testDebugUnitTest --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-005
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-005:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd gallery && ./gradlew testDebugUnitTest --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-005
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-005:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd fileexplorer && ./gradlew testDebugUnitTest --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-005
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-005:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: cd keyboard && ./gradlew testDebugUnitTest --no-daemon --stacktrace || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-005
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-006:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-006
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-006:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-006
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-006:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-006
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-006:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-006
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-006:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-006
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-007:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-007
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-007:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-007
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-007:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-007
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-007:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-007
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-007:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-007
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-008:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-008
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-008:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-008
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-008:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-008
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-008:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-008
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-008:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-008
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-009:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-009
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-009:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-009
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-009:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-009
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-009:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-009
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-009:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-009
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-010:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-010
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-010:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-010
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-010:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-010
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-010:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-010
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-010:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-010
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-011:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-011
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-011:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-011
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-011:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-011
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-011:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-011
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-011:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-011
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-012:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-012
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-012:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-012
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-012:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-012
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-012:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-012
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-012:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-012
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-013:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-013
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-013:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-013
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-013:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-013
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-013:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-013
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-013:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-013
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-014:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-014
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-014:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-014
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-014:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-014
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-014:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-014
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-014:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-014
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-015:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-015
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-015:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-015
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-015:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-015
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-015:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-015
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-015:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-015
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-016:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-016
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-016:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-016
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-016:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-016
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-016:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-016
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-016:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-016
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-017:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-017
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-017:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-017
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-017:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-017
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-017:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-017
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-017:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-017
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-018:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-018
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-018:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-018
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-018:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-018
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-018:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-018
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-018:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-018
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-019:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-019
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-019:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-019
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-019:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-019
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-019:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-019
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-019:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-019
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-messaging-020:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd messaging && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd messaging && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: messaging-020
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-calling-020:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd calling && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd calling && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calling-020
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-gallery-020:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd gallery && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd gallery && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-020
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-fileexplorer-020:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd fileexplorer && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd fileexplorer && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fileexplorer-020
+          path: apks/*.apk
+          if-no-files-found: ignore
+  build-keyboard-020:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
+      - run: |
+          mkdir -p apks
+          cd keyboard && ./gradlew clean assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+          ls -la ../apks/
+
+      - run: |
+          cd keyboard && ./gradlew clean --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-020
+          path: apks/*.apk
+          if-no-files-found: ignore
