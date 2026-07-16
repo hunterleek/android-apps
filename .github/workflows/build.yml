@@ -1,4 +1,4 @@
-name: Build Android APKs
+name: Build APKs
 
 on:
   push:
@@ -12,57 +12,36 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Set up JDK 17
+    - name: Setup Java
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
-        distribution: 'temurin'
+        java-version: 17
+        distribution: temurin
         
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-      
-    - name: Create Gradle Wrapper
+    - name: Build with Gradle Wrapper
       run: |
-        # Create gradle wrapper for each project
-        for app in messaging calling gallery fileexplorer keyboard; do
-          cd $app
+        for dir in messaging calling gallery fileexplorer keyboard; do
+          cd $dir
+          # Generate wrapper if missing
           if [ ! -f gradlew ]; then
-            echo "Creating gradle wrapper for $app"
-            gradle wrapper --gradle-version 8.0 2>/dev/null || echo "Wrapper creation failed for $app"
-          fi
-          cd ..
-        done
-        
-    - name: Build APKs
-      run: |
-        mkdir -p apks
-        for app in messaging calling gallery fileexplorer keyboard; do
-          echo "=== Building $app ==="
-          cd $app
-          
-          # Try gradlew first, then gradle
-          if [ -f gradlew ]; then
+            echo "Generating wrapper for $dir"
+            echo '#!/bin/bash' > gradlew
+            echo 'exec gradle "$@"' >> gradlew
             chmod +x gradlew
-            ./gradlew assembleDebug --no-daemon || echo "Build failed: $app"
-          else
-            gradle assembleDebug --no-daemon || echo "Build failed: $app"
           fi
-          
-          # Find and copy APKs
-          apk_path=$(find app/build/outputs -name "*.apk" 2>/dev/null | head -1)
-          if [ -n "$apk_path" ]; then
-            cp "$apk_path" ../apks/
-            echo "Copied: $apk_path"
-          fi
+          # Build
+          ./gradlew assembleDebug --no-daemon 2>&1 || echo "Failed: $dir"
+          # Copy APK
+          find . -name "*.apk" -path "*/debug/*" -exec cp {} ../ \; 2>/dev/null || true
           cd ..
         done
-        echo "=== Build Complete ==="
-        ls -la apks/ || echo "No APKs found"
+        mkdir -p apks
+        mv *.apk apks/ 2>/dev/null || true
+        ls -la apks/
         
-    - name: Upload APKs
+    - name: Upload
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: android-apps-debug
+        name: apps
         path: apks/*.apk
-        retention-days: 30
