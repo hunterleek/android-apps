@@ -16,7 +16,7 @@
         android:requestLegacyExternalStorage="true">
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.app.ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.FileExplorer">
             <intent-filter>
@@ -25,20 +25,8 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.ViewerActivity"
-            android:theme="@style/Theme.FileExplorer" />
-
-        <activity
-            android:name=".ui.PropertiesActivity"
-            android:theme="@style/Theme.FileExplorer" />
-
-        <activity
-            android:name=".ui.SearchActivity"
-            android:theme="@style/Theme.FileExplorer" />
-
         <provider
-            android:name=".util.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">

@@ -1,69 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:id="@+id/group_locations">
-        <item
-            android:id="@+id/nav_internal"
-            android:icon="@drawable/ic_storage"
-            android:title="@string/internal_storage" />
-        <item
-            android:id="@+id/nav_sdcard"
-            android:icon="@drawable/ic_sd_card"
-            android:title="@string/sd_card" />
-    </group>
-
-    <group android:id="@+id/group_categories">
-        <item
-            android:id="@+id/nav_downloads"
-            android:icon="@drawable/ic_download"
-            android:title="@string/downloads" />
-        <item
-            android:id="@+id/nav_documents"
-            android:icon="@drawable/ic_document"
-            android:title="@string/documents" />
-        <item
-            android:id="@+id/nav_images"
-            android:icon="@drawable/ic_image"
-            android:title="@string/images" />
-        <item
-            android:id="@+id/nav_videos"
-            android:icon="@drawable/ic_video_file"
-            android:title="@string/videos" />
-        <item
-            android:id="@+id/nav_audio"
-            android:icon="@drawable/ic_audio_file"
-            android:title="@string/audio" />
-        <item
-            android:id="@+id/nav_archives"
-            android:icon="@drawable/ic_archive"
-            android:title="@string/archives" />
-        <item
-            android:id="@+id/nav_apks"
-            android:icon="@drawable/ic_apk"
-            android:title="@string/apks" />
-    </group>
-
-    <group android:id="@+id/group_special">
-        <item
-            android:id="@+id/nav_recent"
-            android:icon="@drawable/ic_recent"
-            android:title="@string/recent" />
-        <item
-            android:id="@+id/nav_favorites"
-            android:icon="@drawable/ic_favorite"
-            android:title="@string/favorites" />
-        <item
-            android:id="@+id/nav_trash"
-            android:icon="@drawable/ic_delete"
-            android:title="@string/trash" />
-    </group>
-
-    <item android:title="@string/settings">
-        <menu>
-            <item
-                android:id="@+id/nav_show_hidden"
-                android:checkable="true"
-                android:icon="@drawable/ic_hidden"
-                android:title="@string/show_hidden" />
-        </menu>
-    </item>
+    <item android:id="@+id/nav_internal" android:title="Internal Storage" />
+    <item android:id="@+id/nav_sdcard" android:title="SD Card" />
+    <item android:id="@+id/nav_downloads" android:title="Downloads" />
+    <item android:id="@+id/nav_documents" android:title="Documents" />
+    <item android:id="@+id/nav_images" android:title="Images" />
+    <item android:id="@+id/nav_videos" android:title="Videos" />
+    <item android:id="@+id/nav_audio" android:title="Audio" />
+    <item android:id="@+id/nav_show_hidden" android:title="Show Hidden" android:checkable="true" android:checked="true" />
 </menu>

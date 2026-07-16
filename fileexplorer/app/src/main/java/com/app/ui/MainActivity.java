@@ -9,9 +9,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,42 +20,36 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-
 import com.app.adapter.FileAdapter;
 import com.app.model.FileItem;
-import com.app.model.StoragePartition;
-import com.app.util.PartitionManager;
-import com.app.util.RootUtils;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FileAdapter.OnFileClickListener {
 
-    private static final int PERMISSION_REQUEST_ALL_FILES = 1001;
-    private static final int PERMISSION_REQUEST_STORAGE = 1002;
+    private static final int PERMISSION_STORAGE = 1002;
 
     private RecyclerView recyclerView;
     private TextView textEmpty, textPath;
     private FileAdapter adapter;
-    private List<FileItem> fileList;
+    private List<FileItem> fileList = new ArrayList<>();
     private File currentDirectory;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private View selectionBar;
-    private TextView textSelectedCount;
-    private boolean isGridView = false;
     private boolean showHiddenFiles = true;
-    private boolean selectMode = false;
+    private List<FileItem> clipboard = new ArrayList<>();
+    private boolean clipboardCut = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +57,51 @@ public class MainActivity extends AppCompatActivity implements FileAdapter.OnFil
         setContentView(R.layout.activity_main);
 
         initViews();
-        checkRootAccess();
-        setupNavigation();
         setupToolbar();
         setupRecyclerView();
         setupFab();
-        setupSelectionBar();
-        requestPermissions();
+        setupNavigation();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                new AlertDialog.Builder(this)
+                    .setTitle("All Files Permission")
+                    .setMessage("This file explorer needs access to all files on your device.")
+                    .setPositiveButton("Grant", (d, w) -> {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                        intent.setData(Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("Cancel", (d, w) -> loadDirectory(getRootDir()))
+                    .setCancelable(false)
+                    .show();
+            } else {
+                loadDirectory(getRootDir());
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISSION_STORAGE);
+            } else {
+                loadDirectory(getRootDir());
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager() && currentDirectory == null) {
+            loadDirectory(getRootDir());
+        }
+    }
+
+    private File getRootDir() {
+        File root = Environment.getExternalStorageDirectory();
+        if (root == null || !root.exists()) root = new File("/storage/emulated/0");
+        return root;
     }
 
     private void initViews() {
@@ -78,139 +110,6 @@ public class MainActivity extends AppCompatActivity implements FileAdapter.OnFil
         textPath = findViewById(R.id.textPath);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
-        selectionBar = findViewById(R.id.selectionBar);
-        textSelectedCount = findViewById(R.id.textSelectedCount);
-    }
-
-    private void checkRootAccess() {
-        RootUtils.checkRootAccess();
-    }
-
-    private void requestPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (!Environment.isExternalStorageManager()) {
-                new AlertDialog.Builder(this)
-                    .setTitle("Permission Required")
-                    .setMessage("This app needs access to manage all files. Please grant permission on the next screen.")
-                    .setPositiveButton("Grant", (dialog, which) -> {
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                        intent.setData(Uri.parse("package:" + getPackageName()));
-                        startActivity(intent);
-                    })
-                    .setNegativeButton("Cancel", (dialog, which) -> {
-                        Toast.makeText(this, "Some features may not work without permission", Toast.LENGTH_LONG).show();
-                    })
-                    .setCancelable(false)
-                    .show();
-            } else {
-                loadDirectory(new File("/storage/emulated/0"));
-            }
-        } else {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                    new String[]{
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    }, PERMISSION_REQUEST_STORAGE);
-            } else {
-                loadDirectory(new File("/storage/emulated/0"));
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_STORAGE) {
-            boolean allGranted = true;
-            for (int result : grantResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    allGranted = false;
-                    break;
-                }
-            }
-            if (allGranted) {
-                loadDirectory(new File("/storage/emulated/0"));
-            } else {
-                Toast.makeText(this, "Permission denied. Some features may not work.", Toast.LENGTH_LONG).show();
-                loadDirectory(new File("/storage/emulated/0"));
-            }
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
-            if (currentDirectory == null) {
-                loadDirectory(new File("/storage/emulated/0"));
-            }
-        }
-    }
-
-    private void setupNavigation() {
-        navigationView.setNavigationItemSelectedListener(item -> {
-            drawerLayout.closeDrawers();
-            int id = item.getItemId();
-            if (id == R.id.nav_internal) {
-                loadDirectory(new File("/storage/emulated/0"));
-            } else if (id == R.id.nav_sdcard) {
-                File sdCard = getSdCardPath();
-                if (sdCard != null) {
-                    loadDirectory(sdCard);
-                } else {
-                    Toast.makeText(this, "SD Card not found", Toast.LENGTH_SHORT).show();
-                }
-            } else if (id == R.id.nav_downloads) {
-                loadDirectory(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()));
-            } else if (id == R.id.nav_documents) {
-                loadDirectory(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath()));
-            } else if (id == R.id.nav_images) {
-                loadDirectory(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()));
-            } else if (id == R.id.nav_videos) {
-                loadDirectory(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath()));
-            } else if (id == R.id.nav_audio) {
-                loadDirectory(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath()));
-            } else if (id == R.id.nav_archives) {
-                navigateToArchives();
-            } else if (id == R.id.nav_apks) {
-                navigateToApks();
-            } else if (id == R.id.nav_recent) {
-                navigateToRecent();
-            } else if (id == R.id.nav_favorites) {
-                navigateToFavorites();
-            } else if (id == R.id.nav_trash) {
-                navigateToTrash();
-            } else if (id == R.id.nav_show_hidden) {
-                showHiddenFiles = !showHiddenFiles;
-                item.setChecked(showHiddenFiles);
-                adapter.setShowHiddenFiles(showHiddenFiles);
-                if (currentDirectory != null) {
-                    loadDirectory(currentDirectory);
-                }
-            }
-            return true;
-        });
-
-        updateStorageInfo();
-    }
-
-    private void updateStorageInfo() {
-        View header = navigationView.getHeaderView(0);
-        if (header != null) {
-            TextView textStorage = header.findViewById(R.id.textStorage);
-            File internal = new File("/storage/emulated/0");
-            if (internal.exists()) {
-                long total = internal.getTotalSpace();
-                long free = internal.getFreeSpace();
-                long used = total - free;
-                textStorage.setText(StoragePartition.formatSize(used) + " / " + StoragePartition.formatSize(total));
-            }
-        }
     }
 
     private void setupToolbar() {
@@ -220,26 +119,17 @@ public class MainActivity extends AppCompatActivity implements FileAdapter.OnFil
         toolbar.setOnMenuItemClickListener(item -> {
             int id = item.getItemId();
             if (id == R.id.menu_search) {
-                startActivity(new Intent(this, SearchActivity.class));
-                return true;
-            } else if (id == R.id.menu_grid) {
-                isGridView = !isGridView;
-                item.setIcon(isGridView ? R.drawable.ic_list : R.drawable.ic_grid);
-                adapter.setGridView(isGridView);
-                return true;
-            } else if (id == R.id.menu_sort) {
-                showSortDialog();
-                return true;
+                Toast.makeText(this, "Search is not implemented yet", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.menu_select_all) {
-                enterSelectMode();
-                return true;
+                selectAll();
+            } else if (id == R.id.menu_sort) {
+                sortFiles();
             }
-            return false;
+            return true;
         });
     }
 
     private void setupRecyclerView() {
-        fileList = new ArrayList<>();
         adapter = new FileAdapter(this, fileList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -247,350 +137,255 @@ public class MainActivity extends AppCompatActivity implements FileAdapter.OnFil
 
     private void setupFab() {
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(v -> showNewFileMenu());
+        fab.setOnClickListener(v -> showNewMenu());
     }
 
-    private void setupSelectionBar() {
-        findViewById(R.id.btnCopy).setOnClickListener(v -> copySelectedFiles());
-        findViewById(R.id.btnCut).setOnClickListener(v -> cutSelectedFiles());
-        findViewById(R.id.btnDelete).setOnClickListener(v -> deleteSelectedFiles());
-        findViewById(R.id.btnMore).setOnClickListener(v -> showMoreOptions());
+    private void setupNavigation() {
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_internal) loadDirectory(getRootDir());
+            else if (id == R.id.nav_sdcard) loadDirectory(new File("/storage/sdcard1"));
+            else if (id == R.id.nav_downloads) loadDirectory(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+            else if (id == R.id.nav_documents) loadDirectory(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS));
+            else if (id == R.id.nav_images) loadDirectory(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+            else if (id == R.id.nav_videos) loadDirectory(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES));
+            else if (id == R.id.nav_audio) loadDirectory(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC));
+            else if (id == R.id.nav_show_hidden) {
+                showHiddenFiles = !showHiddenFiles;
+                item.setChecked(showHiddenFiles);
+                adapter.setShowHiddenFiles(showHiddenFiles);
+                if (currentDirectory != null) loadDirectory(currentDirectory);
+            }
+            drawerLayout.closeDrawers();
+            return true;
+        });
     }
 
-    public void loadDirectory(File directory) {
-        if (directory == null) return;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_STORAGE) {
+            loadDirectory(getRootDir());
+        }
+    }
 
-        currentDirectory = directory;
-        textPath.setText(directory.getAbsolutePath());
-
+    public void loadDirectory(File dir) {
+        if (dir == null) return;
+        currentDirectory = dir;
+        textPath.setText(dir.getAbsolutePath());
         fileList.clear();
 
-        File[] files = directory.listFiles();
-        if (files == null && RootUtils.isRootAvailable()) {
-            files = RootUtils.listFilesInRoot(directory).toArray(new File[0]);
-        }
-
-        if (files != null && files.length > 0) {
-            List<File> fileListTemp = new ArrayList<>();
-            Collections.addAll(fileListTemp, files);
-
-            Collections.sort(fileListTemp, (f1, f2) -> {
-                if (f1.isDirectory() && !f2.isDirectory()) return -1;
-                if (!f1.isDirectory() && f2.isDirectory()) return 1;
-                return f1.getName().compareToIgnoreCase(f2.getName());
+        File[] files = dir.listFiles();
+        if (files != null) {
+            List<File> temp = new ArrayList<>();
+            for (File f : files) {
+                if (!showHiddenFiles && f.getName().startsWith(".")) continue;
+                temp.add(f);
+            }
+            Collections.sort(temp, (a, b) -> {
+                if (a.isDirectory() && !b.isDirectory()) return -1;
+                if (!a.isDirectory() && b.isDirectory()) return 1;
+                return a.getName().compareToIgnoreCase(b.getName());
             });
-
-            for (File file : fileListTemp) {
-                if (!showHiddenFiles && file.getName().startsWith(".")) {
-                    continue;
-                }
-                fileList.add(new FileItem(file));
-            }
-
-            recyclerView.setVisibility(View.VISIBLE);
-            textEmpty.setVisibility(View.GONE);
-        } else {
-            recyclerView.setVisibility(View.GONE);
-            textEmpty.setVisibility(View.VISIBLE);
+            for (File f : temp) fileList.add(new FileItem(f));
         }
 
         adapter.notifyDataSetChanged();
+        textEmpty.setVisibility(fileList.isEmpty() ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(fileList.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     @Override
-    public void onFileClick(FileItem file) {
-        if (file.isDirectory()) {
-            loadDirectory(file.getFile());
+    public void onFileClick(FileItem item) {
+        File f = item.getFile();
+        if (f.isDirectory()) {
+            loadDirectory(f);
         } else {
-            openFile(file.getFile());
+            openFile(f);
         }
     }
 
     @Override
-    public void onFileLongClick(FileItem file) {
-        enterSelectMode();
-        file.setSelected(true);
+    public void onFileLongClick(FileItem item) {
+        item.setSelected(!item.isSelected());
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onOptionsClick(FileItem file, View view) {
-        PopupMenu popup = new PopupMenu(this, view);
-        popup.inflate(R.menu.context_menu);
-        popup.setOnMenuItemClickListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.menu_copy) {
-                // Copy file
-                return true;
-            } else if (id == R.id.menu_cut) {
-                // Cut file
-                return true;
-            } else if (id == R.id.menu_rename) {
-                showRenameDialog(file);
-                return true;
-            } else if (id == R.id.menu_delete) {
-                deleteFile(file);
-                return true;
-            } else if (id == R.id.menu_properties) {
-                showProperties(file);
-                return true;
-            } else if (id == R.id.menu_share) {
-                shareFile(file);
-                return true;
-            }
-            return false;
+    public void onOptionsClick(FileItem item, View anchor) {
+        PopupMenu popup = new PopupMenu(this, anchor);
+        popup.getMenu().add(0, 1, 0, "Copy");
+        popup.getMenu().add(0, 2, 0, "Cut");
+        popup.getMenu().add(0, 3, 0, "Rename");
+        popup.getMenu().add(0, 4, 0, "Delete");
+        popup.getMenu().add(0, 5, 0, "Share");
+        popup.setOnMenuItemClickListener(menuItem -> {
+            int id = menuItem.getItemId();
+            if (id == 1) copyFiles(Collections.singletonList(item));
+            else if (id == 2) cutFiles(Collections.singletonList(item));
+            else if (id == 3) renameFile(item);
+            else if (id == 4) deleteFile(item);
+            else if (id == 5) shareFile(item);
+            return true;
         });
         popup.show();
     }
 
-    private void openFile(File file) {
+    private void showNewMenu() {
+        new AlertDialog.Builder(this)
+            .setTitle("Create")
+            .setItems(new String[]{"New Folder", "Paste"}, (d, which) -> {
+                if (which == 0) newFolder();
+                else if (which == 1) pasteFiles();
+            })
+            .show();
+    }
+
+    private void newFolder() {
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_new_folder, null);
+        EditText edit = v.findViewById(R.id.editName);
+        new AlertDialog.Builder(this)
+            .setTitle("New Folder")
+            .setView(v)
+            .setPositiveButton("Create", (d, w) -> {
+                String name = edit.getText().toString().trim();
+                if (!name.isEmpty()) {
+                    File f = new File(currentDirectory, name);
+                    if (f.mkdirs()) loadDirectory(currentDirectory);
+                    else Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            })
+            .setNegativeButton("Cancel", null)
+            .show();
+    }
+
+    private void renameFile(FileItem item) {
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_new_folder, null);
+        EditText edit = v.findViewById(R.id.editName);
+        edit.setText(item.getFile().getName());
+        new AlertDialog.Builder(this)
+            .setTitle("Rename")
+            .setView(v)
+            .setPositiveButton("Rename", (d, w) -> {
+                String name = edit.getText().toString().trim();
+                if (!name.isEmpty()) {
+                    File dest = new File(item.getFile().getParentFile(), name);
+                    if (item.getFile().renameTo(dest)) loadDirectory(currentDirectory);
+                    else Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            })
+            .setNegativeButton("Cancel", null)
+            .show();
+    }
+
+    private void deleteFile(FileItem item) {
+        new AlertDialog.Builder(this)
+            .setTitle("Delete")
+            .setMessage("Delete \"" + item.getName() + "\"?")
+            .setPositiveButton("Delete", (d, w) -> {
+                if (item.getFile().delete()) loadDirectory(currentDirectory);
+                else Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
+            })
+            .setNegativeButton("Cancel", null)
+            .show();
+    }
+
+    private void copyFiles(List<FileItem> items) {
+        clipboard.clear();
+        clipboard.addAll(items);
+        clipboardCut = false;
+        Toast.makeText(this, "Copied " + items.size() + " item(s)", Toast.LENGTH_SHORT).show();
+    }
+
+    private void cutFiles(List<FileItem> items) {
+        clipboard.clear();
+        clipboard.addAll(items);
+        clipboardCut = true;
+        Toast.makeText(this, "Cut " + items.size() + " item(s)", Toast.LENGTH_SHORT).show();
+    }
+
+    private void pasteFiles() {
+        if (clipboard.isEmpty()) {
+            Toast.makeText(this, "Clipboard empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        int moved = 0;
+        for (FileItem item : clipboard) {
+            File src = item.getFile();
+            File dest = new File(currentDirectory, src.getName());
+            if (clipboardCut) {
+                if (src.renameTo(dest)) moved++;
+            } else {
+                try {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        Files.copy(src.toPath(), dest.toPath());
+                    } else {
+                        copyFileLegacy(src, dest);
+                    }
+                    moved++;
+                } catch (Exception e) {}
+            }
+        }
+        if (clipboardCut) clipboard.clear();
+        loadDirectory(currentDirectory);
+        Toast.makeText(this, "Pasted " + moved + " item(s)", Toast.LENGTH_SHORT).show();
+    }
+
+    private void copyFileLegacy(File src, File dest) throws Exception {
+        java.io.InputStream in = new java.io.FileInputStream(src);
+        java.io.OutputStream out = new java.io.FileOutputStream(dest);
+        byte[] buf = new byte[4096];
+        int len;
+        while ((len = in.read(buf)) > 0) out.write(buf, 0, len);
+        in.close();
+        out.close();
+    }
+
+    private void selectAll() {
+        boolean all = true;
+        for (FileItem i : fileList) if (!i.isSelected()) { all = false; break; }
+        for (FileItem i : fileList) i.setSelected(!all);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void sortFiles() {
+        Collections.sort(fileList, Comparator.comparing(a -> a.getName().toLowerCase()));
+        adapter.notifyDataSetChanged();
+    }
+
+    private void openFile(File f) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri uri = androidx.core.content.FileProvider.getUriForFile(this,
-                    getPackageName() + ".provider", file);
-            intent.setDataAndType(uri, getMimeType(file));
+            Uri uri = FileProvider.getUriForFile(this, getPackageName() + ".provider", f);
+            intent.setDataAndType(uri, getMimeType(f));
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(intent);
         } catch (Exception e) {
-            Toast.makeText(this, "Cannot open this file type", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cannot open this file", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private String getMimeType(File file) {
-        String name = file.getName().toLowerCase();
-        if (name.endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".png") ||
-            name.endsWith(".gif") || name.endsWith(".webp")) {
-            return "image/*";
-        } else if (name.endsWith(".mp4") || name.endsWith(".mkv") || name.endsWith(".avi")) {
-            return "video/*";
-        } else if (name.endsWith(".mp3") || name.endsWith(".wav") || name.endsWith(".flac")) {
-            return "audio/*";
-        } else if (name.endsWith(".pdf")) {
-            return "application/pdf";
-        } else if (name.endsWith(".apk")) {
-            return "application/vnd.android.package-archive";
-        } else if (name.endsWith(".txt")) {
-            return "text/plain";
-        }
-        return "*/*";
-    }
-
-    private void showNewFileMenu() {
-        new AlertDialog.Builder(this)
-            .setTitle("Create New")
-            .setItems(new String[]{"Folder", "File"}, (dialog, which) -> {
-                if (which == 0) {
-                    showNewFolderDialog();
-                } else {
-                    showNewFileDialog();
-                }
-            })
-            .show();
-    }
-
-    private void showNewFolderDialog() {
-        View view = getLayoutInflater().inflate(R.layout.dialog_new_folder, null);
-        com.google.android.material.textfield.TextInputEditText editName = view.findViewById(R.id.editName);
-
-        new AlertDialog.Builder(this)
-            .setTitle("New Folder")
-            .setView(view)
-            .setPositiveButton("Create", (dialog, which) -> {
-                String name = editName.getText().toString().trim();
-                if (!name.isEmpty()) {
-                    File newFolder = new File(currentDirectory, name);
-                    if (newFolder.mkdirs()) {
-                        loadDirectory(currentDirectory);
-                        Toast.makeText(this, "Folder created", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "Failed to create folder", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            })
-            .setNegativeButton("Cancel", null)
-            .show();
-    }
-
-    private void showNewFileDialog() {
-        View view = getLayoutInflater().inflate(R.layout.dialog_new_folder, null);
-        com.google.android.material.textfield.TextInputEditText editName = view.findViewById(R.id.editName);
-
-        new AlertDialog.Builder(this)
-            .setTitle("New File")
-            .setView(view)
-            .setPositiveButton("Create", (dialog, which) -> {
-                String name = editName.getText().toString().trim();
-                if (!name.isEmpty()) {
-                    File newFile = new File(currentDirectory, name);
-                    try {
-                        if (newFile.createNewFile()) {
-                            loadDirectory(currentDirectory);
-                            Toast.makeText(this, "File created", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(this, "Failed to create file", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            })
-            .setNegativeButton("Cancel", null)
-            .show();
-    }
-
-    private void showRenameDialog(FileItem file) {
-        View view = getLayoutInflater().inflate(R.layout.dialog_rename, null);
-        com.google.android.material.textfield.TextInputEditText editName = view.findViewById(R.id.editName);
-        editName.setText(file.getName());
-
-        new AlertDialog.Builder(this)
-            .setTitle("Rename")
-            .setView(view)
-            .setPositiveButton("Rename", (dialog, which) -> {
-                String newName = editName.getText().toString().trim();
-                if (!newName.isEmpty()) {
-                    File newFile = new File(file.getFile().getParent(), newName);
-                    if (file.getFile().renameTo(newFile)) {
-                        loadDirectory(currentDirectory);
-                        Toast.makeText(this, "Renamed", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "Failed to rename", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            })
-            .setNegativeButton("Cancel", null)
-            .show();
-    }
-
-    private void deleteFile(FileItem file) {
-        new AlertDialog.Builder(this)
-            .setTitle("Delete")
-            .setMessage("Are you sure you want to delete \"" + file.getName() + "\"?")
-            .setPositiveButton("Delete", (dialog, which) -> {
-                if (file.getFile().delete() || (RootUtils.isRootAvailable() && RootUtils.deleteFile(file.getFile()))) {
-                    loadDirectory(currentDirectory);
-                    Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show();
-                }
-            })
-            .setNegativeButton("Cancel", null)
-            .show();
-    }
-
-    private void showProperties(FileItem file) {
-        Intent intent = new Intent(this, PropertiesActivity.class);
-        intent.putExtra("file_path", file.getFile().getAbsolutePath());
-        startActivity(intent);
-    }
-
-    private void shareFile(FileItem file) {
+    private void shareFile(FileItem item) {
         try {
             Intent intent = new Intent(Intent.ACTION_SEND);
-            Uri uri = androidx.core.content.FileProvider.getUriForFile(this,
-                    getPackageName() + ".provider", file.getFile());
-            intent.setDataAndType(uri, getMimeType(file.getFile()));
+            Uri uri = FileProvider.getUriForFile(this, getPackageName() + ".provider", item.getFile());
+            intent.setType(getMimeType(item.getFile()));
             intent.putExtra(Intent.EXTRA_STREAM, uri);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(Intent.createChooser(intent, "Share"));
         } catch (Exception e) {
-            Toast.makeText(this, "Cannot share this file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cannot share", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void enterSelectMode() {
-        selectMode = true;
-        selectionBar.setVisibility(View.VISIBLE);
-        adapter.setSelectMode(true);
-    }
-
-    private void exitSelectMode() {
-        selectMode = false;
-        selectionBar.setVisibility(View.GONE);
-        adapter.setSelectMode(false);
-        for (FileItem item : fileList) {
-            item.setSelected(false);
-        }
-    }
-
-    private void copySelectedFiles() {
-        // Implement copy functionality
-        Toast.makeText(this, "Copy to clipboard", Toast.LENGTH_SHORT).show();
-        exitSelectMode();
-    }
-
-    private void cutSelectedFiles() {
-        // Implement cut functionality
-        Toast.makeText(this, "Cut to clipboard", Toast.LENGTH_SHORT).show();
-        exitSelectMode();
-    }
-
-    private void deleteSelectedFiles() {
-        int count = 0;
-        for (FileItem item : fileList) {
-            if (item.isSelected()) {
-                if (item.getFile().delete()) count++;
-            }
-        }
-        Toast.makeText(this, "Deleted " + count + " items", Toast.LENGTH_SHORT).show();
-        loadDirectory(currentDirectory);
-        exitSelectMode();
-    }
-
-    private void showMoreOptions() {
-        // Show more options menu
-    }
-
-    private void showSortDialog() {
-        new AlertDialog.Builder(this)
-            .setTitle("Sort By")
-            .setItems(new String[]{"Name", "Date", "Size", "Type"}, (dialog, which) -> {
-                // Implement sorting
-                loadDirectory(currentDirectory);
-            })
-            .show();
-    }
-
-    private File getSdCardPath() {
-        File[] externalDirs = getExternalFilesDirs(null);
-        if (externalDirs != null && externalDirs.length > 1) {
-            String path = externalDirs[1].getAbsolutePath();
-            int index = path.indexOf("/Android");
-            if (index > 0) {
-                return new File(path.substring(0, index));
-            }
-        }
-        return null;
-    }
-
-    private void navigateToArchives() {
-        // Navigate to archives folder
-    }
-
-    private void navigateToApks() {
-        // Navigate to APKs folder
-    }
-
-    private void navigateToRecent() {
-        // Navigate to recent files
-    }
-
-    private void navigateToFavorites() {
-        // Navigate to favorites
-    }
-
-    private void navigateToTrash() {
-        // Navigate to trash
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (selectMode) {
-            exitSelectMode();
-        } else if (currentDirectory != null && !currentDirectory.getAbsolutePath().equals("/storage/emulated/0")) {
-            loadDirectory(currentDirectory.getParentFile());
-        } else {
-            super.onBackPressed();
-        }
+    private String getMimeType(File f) {
+        String n = f.getName().toLowerCase();
+        if (n.endsWith(".jpg") || n.endsWith(".jpeg") || n.endsWith(".png") || n.endsWith(".gif")) return "image/*";
+        if (n.endsWith(".mp4") || n.endsWith(".mkv") || n.endsWith(".avi")) return "video/*";
+        if (n.endsWith(".mp3") || n.endsWith(".wav") || n.endsWith(".flac")) return "audio/*";
+        if (n.endsWith(".pdf")) return "application/pdf";
+        if (n.endsWith(".apk")) return "application/vnd.android.package-archive";
+        if (n.endsWith(".txt")) return "text/plain";
+        return "*/*";
     }
 }

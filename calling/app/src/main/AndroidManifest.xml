@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Calling">
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.app.ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Calling">
             <intent-filter>
@@ -21,10 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.CallActivity"
-            android:theme="@style/Theme.Calling" />
 
     </application>
 

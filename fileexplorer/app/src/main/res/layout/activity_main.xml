@@ -4,163 +4,60 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="#000000">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#000000">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black">
+            android:background="#000000"
+            app:title="Files"
+            app:titleTextColor="#FFFFFF"
+            app:navigationIcon="@drawable/ic_menu" />
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/black"
-                app:navigationIcon="@drawable/ic_menu"
-                app:titleTextColor="@color/white" />
-
-            <LinearLayout
-                android:id="@+id/breadcrumbContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/grey_dark"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp">
-
-                <TextView
-                    android:id="@+id/textPath"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="start"
-                    android:fontFamily="sans-serif-light"
-                    android:singleLine="true"
-                    android:textColor="@color/grey_text"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-        </com.google.android.material.appbar.AppBarLayout>
+        <TextView
+            android:id="@+id/textPath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textColor="#888888"
+            android:textSize="12sp" />
 
         <FrameLayout
-            android:id="@+id/containerMain"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/black"
-                android:clipToPadding="false"
-                android:padding="4dp" />
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/textEmpty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="sans-serif-light"
-                android:text="@string/no_files"
-                android:textColor="@color/grey_text"
-                android:textSize="16sp"
+                android:text="No files"
+                android:textColor="#888888"
+                android:textSize="18sp"
                 android:visibility="gone" />
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:indeterminateTint="@color/white"
-                android:visibility="gone" />
-
         </FrameLayout>
-
-        <LinearLayout
-            android:id="@+id/selectionBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/grey_dark"
-            android:elevation="8dp"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/textSelectedCount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-light"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
-
-            <ImageButton
-                android:id="@+id/btnCopy"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_copy"
-                android:contentDescription="Copy"
-                app:tint="@color/white" />
-
-            <ImageButton
-                android:id="@+id/btnCut"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_cut"
-                android:contentDescription="Cut"
-                app:tint="@color/white" />
-
-            <ImageButton
-                android:id="@+id/btnDelete"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_delete"
-                android:contentDescription="Delete"
-                app:tint="@color/white" />
-
-            <ImageButton
-                android:id="@+id/btnMore"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_more"
-                android:contentDescription="More"
-                app:tint="@color/white" />
-
-        </LinearLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:backgroundTint="@color/grey_light"
-            android:src="@drawable/ic_add"
-            app:tint="@color/white" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/black"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        android:background="#0D0D0D"
+        app:itemTextColor="#FFFFFF"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu" />
 
