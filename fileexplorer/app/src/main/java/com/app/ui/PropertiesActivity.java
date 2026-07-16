@@ -23,14 +23,14 @@ public class PropertiesActivity extends AppCompatActivity {
         }
         File file = new File(path);
         TextView textName = findViewById(R.id.textName);
-        TextView textPath = findViewById(R.id.textPath);
-        TextView textSize = findViewById(R.id.textSize);
-        TextView textDate = findViewById(R.id.textDate);
-        TextView textType = findViewById(R.id.textType);
+        TextView rowSize = findViewById(R.id.rowSize);
+        TextView rowType = findViewById(R.id.rowType);
+        TextView rowPath = findViewById(R.id.rowPath);
+        TextView rowModified = findViewById(R.id.rowModified);
         if (textName != null) textName.setText(file.getName());
-        if (textPath != null) textPath.setText(file.getAbsolutePath());
-        if (textSize != null) textSize.setText(file.isDirectory() ? "-" : StoragePartition.formatSize(file.length()));
-        if (textDate != null) textDate.setText(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()).format(new java.util.Date(file.lastModified())));
-        if (textType != null) textType.setText(file.isDirectory() ? "Folder" : "File");
+        if (rowSize != null) rowSize.setText(file.isDirectory() ? "-" : StoragePartition.formatSize(file.length()));
+        if (rowType != null) rowType.setText(file.isDirectory() ? "Folder" : "File");
+        if (rowPath != null) rowPath.setText(file.getAbsolutePath());
+        if (rowModified != null) rowModified.setText(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()).format(new java.util.Date(file.lastModified())));
     }
 }
