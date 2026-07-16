@@ -1,0 +1,277 @@
+[
+  {
+    "app": "messaging",
+    "tests": [
+      {
+        "test": 1,
+        "name": "test_1_gradle_build",
+        "code": 1
+      },
+      {
+        "test": 2,
+        "name": "test_2_clean_build",
+        "code": 1
+      },
+      {
+        "test": 3,
+        "name": "test_3_manifest_validation",
+        "code": 0
+      },
+      {
+        "test": 4,
+        "name": "test_4_aapt2_compile_resources",
+        "code": 0
+      },
+      {
+        "test": 5,
+        "name": "test_5_layout_reference_check",
+        "code": 1
+      },
+      {
+        "test": 6,
+        "name": "test_6_gradle_sync",
+        "code": 0
+      },
+      {
+        "test": 7,
+        "name": "test_7_dependencies_resolve",
+        "code": 1
+      },
+      {
+        "test": 8,
+        "name": "test_8_lint_check",
+        "code": 1
+      },
+      {
+        "test": 9,
+        "name": "test_9_apk_output",
+        "code": 1
+      },
+      {
+        "test": 10,
+        "name": "test_10_proguard_config",
+        "code": 0
+      }
+    ]
+  },
+  {
+    "app": "calling",
+    "tests": [
+      {
+        "test": 1,
+        "name": "test_1_gradle_build",
+        "code": 1
+      },
+      {
+        "test": 2,
+        "name": "test_2_clean_build",
+        "code": 1
+      },
+      {
+        "test": 3,
+        "name": "test_3_manifest_validation",
+        "code": 0
+      },
+      {
+        "test": 4,
+        "name": "test_4_aapt2_compile_resources",
+        "code": 0
+      },
+      {
+        "test": 5,
+        "name": "test_5_layout_reference_check",
+        "code": 1
+      },
+      {
+        "test": 6,
+        "name": "test_6_gradle_sync",
+        "code": 0
+      },
+      {
+        "test": 7,
+        "name": "test_7_dependencies_resolve",
+        "code": 1
+      },
+      {
+        "test": 8,
+        "name": "test_8_lint_check",
+        "code": 1
+      },
+      {
+        "test": 9,
+        "name": "test_9_apk_output",
+        "code": 1
+      },
+      {
+        "test": 10,
+        "name": "test_10_proguard_config",
+        "code": 0
+      }
+    ]
+  },
+  {
+    "app": "gallery",
+    "tests": [
+      {
+        "test": 1,
+        "name": "test_1_gradle_build",
+        "code": 1
+      },
+      {
+        "test": 2,
+        "name": "test_2_clean_build",
+        "code": 1
+      },
+      {
+        "test": 3,
+        "name": "test_3_manifest_validation",
+        "code": 0
+      },
+      {
+        "test": 4,
+        "name": "test_4_aapt2_compile_resources",
+        "code": 0
+      },
+      {
+        "test": 5,
+        "name": "test_5_layout_reference_check",
+        "code": 1
+      },
+      {
+        "test": 6,
+        "name": "test_6_gradle_sync",
+        "code": 0
+      },
+      {
+        "test": 7,
+        "name": "test_7_dependencies_resolve",
+        "code": 1
+      },
+      {
+        "test": 8,
+        "name": "test_8_lint_check",
+        "code": 1
+      },
+      {
+        "test": 9,
+        "name": "test_9_apk_output",
+        "code": 1
+      },
+      {
+        "test": 10,
+        "name": "test_10_proguard_config",
+        "code": 0
+      }
+    ]
+  },
+  {
+    "app": "fileexplorer",
+    "tests": [
+      {
+        "test": 1,
+        "name": "test_1_gradle_build",
+        "code": 1
+      },
+      {
+        "test": 2,
+        "name": "test_2_clean_build",
+        "code": 1
+      },
+      {
+        "test": 3,
+        "name": "test_3_manifest_validation",
+        "code": 0
+      },
+      {
+        "test": 4,
+        "name": "test_4_aapt2_compile_resources",
+        "code": 0
+      },
+      {
+        "test": 5,
+        "name": "test_5_layout_reference_check",
+        "code": 1
+      },
+      {
+        "test": 6,
+        "name": "test_6_gradle_sync",
+        "code": 0
+      },
+      {
+        "test": 7,
+        "name": "test_7_dependencies_resolve",
+        "code": 1
+      },
+      {
+        "test": 8,
+        "name": "test_8_lint_check",
+        "code": 1
+      },
+      {
+        "test": 9,
+        "name": "test_9_apk_output",
+        "code": 1
+      },
+      {
+        "test": 10,
+        "name": "test_10_proguard_config",
+        "code": 0
+      }
+    ]
+  },
+  {
+    "app": "keyboard",
+    "tests": [
+      {
+        "test": 1,
+        "name": "test_1_gradle_build",
+        "code": 1
+      },
+      {
+        "test": 2,
+        "name": "test_2_clean_build",
+        "code": 1
+      },
+      {
+        "test": 3,
+        "name": "test_3_manifest_validation",
+        "code": 0
+      },
+      {
+        "test": 4,
+        "name": "test_4_aapt2_compile_resources",
+        "code": 0
+      },
+      {
+        "test": 5,
+        "name": "test_5_layout_reference_check",
+        "code": 1
+      },
+      {
+        "test": 6,
+        "name": "test_6_gradle_sync",
+        "code": 0
+      },
+      {
+        "test": 7,
+        "name": "test_7_dependencies_resolve",
+        "code": 1
+      },
+      {
+        "test": 8,
+        "name": "test_8_lint_check",
+        "code": 1
+      },
+      {
+        "test": 9,
+        "name": "test_9_apk_output",
+        "code": 1
+      },
+      {
+        "test": 10,
+        "name": "test_10_proguard_config",
+        "code": 0
+      }
+    ]
+  }
+]

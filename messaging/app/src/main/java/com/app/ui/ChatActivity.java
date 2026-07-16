@@ -7,7 +7,7 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.app.R;
+
 import com.app.adapter.MessageAdapter;
 import com.app.model.Message;
 import java.util.ArrayList;

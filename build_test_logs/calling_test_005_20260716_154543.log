@@ -1,0 +1,3 @@
+=== TEST 5: Layout/Resource reference check for calling ===
+UNRESOLVED_IMPORT: /tmp/android-apps-complete/calling/app/src/main/java/com/app/ui/MainActivity.java imports com.app.R
+UNRESOLVED_IMPORT: /tmp/android-apps-complete/calling/app/src/main/java/com/app/ui/CallActivity.java imports com.app.R

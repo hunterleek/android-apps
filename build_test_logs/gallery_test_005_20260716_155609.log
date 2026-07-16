@@ -1,0 +1,14 @@
+=== TEST 5: Layout/Resource reference check for gallery ===
+UNRESOLVED_IMPORT: /tmp/android-apps-complete/gallery/app/src/main/java/com/app/ui/MainActivity.java imports com.app.R
+UNRESOLVED_IMPORT: /tmp/android-apps-complete/gallery/app/src/main/java/com/app/ui/ViewerActivity.java imports com.app.R
+UNRESOLVED_IMPORT: /tmp/android-apps-complete/gallery/app/src/main/java/com/app/ui/AlbumActivity.java imports com.app.R
+UNRESOLVED_IMPORT: /tmp/android-apps-complete/gallery/app/src/main/java/com/app/ui/EditorActivity.java imports com.app.R
+MISSING_DRAWABLE: layout/activity_main.xml references drawable/ic_folder
+MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_back
+MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_share
+MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_edit
+MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_favorite_border
+MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_delete
+MISSING_DRAWABLE: layout/activity_editor.xml references drawable/ic_back
+MISSING_DRAWABLE: layout/activity_album.xml references drawable/ic_back
+MISSING_DRAWABLE: layout/item_photo.xml references drawable/ic_play

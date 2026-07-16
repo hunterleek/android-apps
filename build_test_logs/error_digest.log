@@ -1,0 +1,116 @@
+messaging_test_001_20260716_154543.log: * What went wrong:
+messaging_test_001_20260716_154543.log:    > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/messaging/local.properties'.
+messaging_test_001_20260716_154543.log: Caused by: com.android.builder.errors.EvalIssueException: SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/messaging/local.properties'.
+messaging_test_001_20260716_154543.log: BUILD FAILED in 13s
+messaging_test_002_20260716_154543.log: * What went wrong:
+messaging_test_002_20260716_154543.log:    > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/messaging/local.properties'.
+messaging_test_002_20260716_154543.log: BUILD FAILED in 13s
+messaging_test_004_20260716_154543.log: === TEST 4: AAPT2 compile resources for messaging ===
+messaging_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/messaging/app/src/main/java/com/app/adapter/ContactAdapter.java imports com.app.R
+messaging_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/messaging/app/src/main/java/com/app/adapter/MessageAdapter.java imports com.app.R
+messaging_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/messaging/app/src/main/java/com/app/ui/MainActivity.java imports com.app.R
+messaging_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/messaging/app/src/main/java/com/app/ui/ChatActivity.java imports com.app.R
+messaging_test_005_20260716_154543.log: MISSING_STRING: layout/activity_main.xml references string/appbar_scrolling_view_behavior
+messaging_test_007_20260716_154543.log: * What went wrong:
+messaging_test_007_20260716_154543.log: BUILD FAILED in 11s
+messaging_test_008_20260716_154543.log: * What went wrong:
+messaging_test_008_20260716_154543.log: > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/messaging/local.properties'.
+messaging_test_008_20260716_154543.log: BUILD FAILED in 11s
+messaging_test_009_20260716_154543.log: ERROR: No APK generated
+calling_test_001_20260716_154543.log: * What went wrong:
+calling_test_001_20260716_154543.log:    > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/calling/local.properties'.
+calling_test_001_20260716_154543.log: Caused by: com.android.builder.errors.EvalIssueException: SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/calling/local.properties'.
+calling_test_001_20260716_154543.log: BUILD FAILED in 13s
+calling_test_002_20260716_154543.log: * What went wrong:
+calling_test_002_20260716_154543.log:    > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/calling/local.properties'.
+calling_test_002_20260716_154543.log: BUILD FAILED in 9s
+calling_test_004_20260716_154543.log: === TEST 4: AAPT2 compile resources for calling ===
+calling_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/calling/app/src/main/java/com/app/ui/MainActivity.java imports com.app.R
+calling_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/calling/app/src/main/java/com/app/ui/CallActivity.java imports com.app.R
+calling_test_007_20260716_154543.log: * What went wrong:
+calling_test_007_20260716_154543.log: BUILD FAILED in 11s
+calling_test_008_20260716_154543.log: * What went wrong:
+calling_test_008_20260716_154543.log: > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/calling/local.properties'.
+calling_test_008_20260716_154543.log: BUILD FAILED in 13s
+calling_test_009_20260716_154543.log: ERROR: No APK generated
+gallery_test_001_20260716_154543.log: * What went wrong:
+gallery_test_001_20260716_154543.log:    > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/gallery/local.properties'.
+gallery_test_001_20260716_154543.log: Caused by: com.android.builder.errors.EvalIssueException: SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/gallery/local.properties'.
+gallery_test_001_20260716_154543.log: BUILD FAILED in 13s
+gallery_test_002_20260716_154543.log: * What went wrong:
+gallery_test_002_20260716_154543.log:    > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/gallery/local.properties'.
+gallery_test_002_20260716_154543.log: BUILD FAILED in 14s
+gallery_test_004_20260716_154543.log: === TEST 4: AAPT2 compile resources for gallery ===
+gallery_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/gallery/app/src/main/java/com/app/ui/MainActivity.java imports com.app.R
+gallery_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/gallery/app/src/main/java/com/app/ui/ViewerActivity.java imports com.app.R
+gallery_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/gallery/app/src/main/java/com/app/ui/AlbumActivity.java imports com.app.R
+gallery_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/gallery/app/src/main/java/com/app/ui/EditorActivity.java imports com.app.R
+gallery_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_main.xml references drawable/ic_folder
+gallery_test_005_20260716_154543.log: MISSING_STRING: layout/activity_main.xml references string/appbar_scrolling_view_behavior
+gallery_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_back
+gallery_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_share
+gallery_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_edit
+gallery_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_favorite_border
+gallery_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_delete
+gallery_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_editor.xml references drawable/ic_back
+gallery_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_album.xml references drawable/ic_back
+gallery_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/item_photo.xml references drawable/ic_play
+gallery_test_007_20260716_154543.log: * What went wrong:
+gallery_test_007_20260716_154543.log: BUILD FAILED in 14s
+gallery_test_008_20260716_154543.log: * What went wrong:
+gallery_test_008_20260716_154543.log: > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/gallery/local.properties'.
+gallery_test_008_20260716_154543.log: BUILD FAILED in 14s
+gallery_test_009_20260716_154543.log: ERROR: No APK generated
+fileexplorer_test_001_20260716_154543.log: * What went wrong:
+fileexplorer_test_001_20260716_154543.log:    > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/fileexplorer/local.properties'.
+fileexplorer_test_001_20260716_154543.log: Caused by: com.android.builder.errors.EvalIssueException: SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/fileexplorer/local.properties'.
+fileexplorer_test_001_20260716_154543.log: BUILD FAILED in 15s
+fileexplorer_test_002_20260716_154543.log: * What went wrong:
+fileexplorer_test_002_20260716_154543.log:    > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/fileexplorer/local.properties'.
+fileexplorer_test_002_20260716_154543.log: BUILD FAILED in 14s
+fileexplorer_test_004_20260716_154543.log: === TEST 4: AAPT2 compile resources for fileexplorer ===
+fileexplorer_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/fileexplorer/app/src/main/java/com/app/ui/MainActivity.java imports com.app.R
+fileexplorer_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/fileexplorer/app/src/main/java/com/app/ui/SearchActivity.java imports com.app.R
+fileexplorer_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/fileexplorer/app/src/main/java/com/app/ui/PropertiesActivity.java imports com.app.R
+fileexplorer_test_005_20260716_154543.log: UNRESOLVED_IMPORT: /tmp/android-apps-complete/fileexplorer/app/src/main/java/com/app/adapter/FileAdapter.java imports com.app.R
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_main.xml references drawable/ic_menu
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_main.xml references drawable/ic_copy
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_main.xml references drawable/ic_cut
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_main.xml references drawable/ic_delete
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_main.xml references drawable/ic_more
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_main.xml references drawable/ic_add
+fileexplorer_test_005_20260716_154543.log: MISSING_STRING: layout/activity_main.xml references string/appbar_scrolling_view_behavior
+fileexplorer_test_005_20260716_154543.log: MISSING_STRING: layout/activity_main.xml references string/no_files
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/nav_header.xml references drawable/ic_launcher
+fileexplorer_test_005_20260716_154543.log: MISSING_STRING: layout/nav_header.xml references string/app_name
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/item_file.xml references drawable/ic_folder
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/item_file.xml references drawable/ic_more
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/item_grid.xml references drawable/ic_image
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/item_grid.xml references drawable/ic_folder
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_back
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_share
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_edit
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_info
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_viewer.xml references drawable/ic_delete
+fileexplorer_test_005_20260716_154543.log: MISSING_DRAWABLE: layout/activity_properties.xml references drawable/ic_folder
+fileexplorer_test_007_20260716_154543.log: * What went wrong:
+fileexplorer_test_007_20260716_154543.log: BUILD FAILED in 13s
+fileexplorer_test_008_20260716_154543.log: * What went wrong:
+fileexplorer_test_008_20260716_154543.log: > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/fileexplorer/local.properties'.
+fileexplorer_test_008_20260716_154543.log: BUILD FAILED in 12s
+fileexplorer_test_009_20260716_154543.log: ERROR: No APK generated
+keyboard_test_001_20260716_154543.log: * What went wrong:
+keyboard_test_001_20260716_154543.log:    > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/keyboard/local.properties'.
+keyboard_test_001_20260716_154543.log: Caused by: com.android.builder.errors.EvalIssueException: SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/keyboard/local.properties'.
+keyboard_test_001_20260716_154543.log: BUILD FAILED in 15s
+keyboard_test_002_20260716_154543.log: * What went wrong:
+keyboard_test_002_20260716_154543.log:    > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/keyboard/local.properties'.
+keyboard_test_002_20260716_154543.log: BUILD FAILED in 14s
+keyboard_test_003_20260716_154543.log: MISSING AndroidManifest.xml
+keyboard_test_004_20260716_154543.log: === TEST 4: AAPT2 compile resources for keyboard ===
+keyboard_test_007_20260716_154543.log: * What went wrong:
+keyboard_test_007_20260716_154543.log: BUILD FAILED in 15s
+keyboard_test_008_20260716_154543.log: * What went wrong:
+keyboard_test_008_20260716_154543.log: > SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file at '/tmp/android-apps-complete/keyboard/local.properties'.
+keyboard_test_008_20260716_154543.log: BUILD FAILED in 13s
+keyboard_test_009_20260716_154543.log: ERROR: No APK generated

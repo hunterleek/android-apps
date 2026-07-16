@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.app.R;
+
 import java.util.Locale;
 
 public class CallActivity extends AppCompatActivity {

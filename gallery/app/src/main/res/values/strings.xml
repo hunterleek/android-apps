@@ -14,4 +14,5 @@
     <string name="rotate">Rotate</string>
     <string name="crop">Crop</string>
     <string name="details">Details</string>
+    <string name="appbar_scrolling_view_behavior">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
 </resources>

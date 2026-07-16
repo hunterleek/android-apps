@@ -1,0 +1,6 @@
+=== TEST 5: Layout/Resource reference check for messaging ===
+UNRESOLVED_IMPORT: /tmp/android-apps-complete/messaging/app/src/main/java/com/app/adapter/ContactAdapter.java imports com.app.R
+UNRESOLVED_IMPORT: /tmp/android-apps-complete/messaging/app/src/main/java/com/app/adapter/MessageAdapter.java imports com.app.R
+UNRESOLVED_IMPORT: /tmp/android-apps-complete/messaging/app/src/main/java/com/app/ui/MainActivity.java imports com.app.R
+UNRESOLVED_IMPORT: /tmp/android-apps-complete/messaging/app/src/main/java/com/app/ui/ChatActivity.java imports com.app.R
+MISSING_STRING: layout/activity_main.xml references string/appbar_scrolling_view_behavior

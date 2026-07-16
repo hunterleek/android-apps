@@ -5,7 +5,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-import com.app.R;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

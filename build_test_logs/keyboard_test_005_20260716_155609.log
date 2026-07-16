@@ -1,0 +1,2 @@
+=== TEST 5: Layout/Resource reference check for keyboard ===
+UNRESOLVED_IMPORT: /tmp/android-apps-complete/keyboard/app/src/main/java/com/app/ui/MainActivity.java imports com.app.R

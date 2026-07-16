@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
-import com.app.R;
+
 
 public class EditorActivity extends AppCompatActivity {
 
