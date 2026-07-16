@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.app.R;
 import com.app.model.FileItem;
+import com.app.model.StoragePartition;
 import com.app.util.RootUtils;
 import com.app.util.PartitionManager;
 import java.io.File;
