@@ -25,7 +25,7 @@ jobs:
         mkdir -p apks
         for app in messaging calling gallery fileexplorer keyboard; do
           echo "=== Building $app ==="
-          (cd $app && ./gradlew assembleDebug --no-daemon && cp app/build/outputs/apk/debug/*.apk ../../apks/)
+          (cd $app && ./gradlew assembleDebug --no-daemon && cp app/build/outputs/apk/debug/*.apk ../apks/)
         done
         echo "=== APKs ==="
         ls -la apks/
