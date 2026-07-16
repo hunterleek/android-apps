@@ -23,45 +23,45 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
       
+    - name: Accept Android Licenses
+      run: |
+        yes | sdkmanager --licenses || true
+        
     - name: Build Messaging APK
       run: |
         cd messaging
         chmod +x gradlew 2>/dev/null || true
-        ./gradlew assembleDebug || gradle assembleDebug
+        gradle assembleDebug --no-daemon
         mkdir -p ../apks
-        cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+        cp app/build/outputs/apk/debug/*.apk ../apks/
         
     - name: Build Calling APK
       run: |
         cd calling
-        chmod +x gradlew 2>/dev/null || true
-        ./gradlew assembleDebug || gradle assembleDebug
+        gradle assembleDebug --no-daemon
         mkdir -p ../apks
-        cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+        cp app/build/outputs/apk/debug/*.apk ../apks/
         
     - name: Build Gallery APK
       run: |
         cd gallery
-        chmod +x gradlew 2>/dev/null || true
-        ./gradlew assembleDebug || gradle assembleDebug
+        gradle assembleDebug --no-daemon
         mkdir -p ../apks
-        cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+        cp app/build/outputs/apk/debug/*.apk ../apks/
         
     - name: Build File Explorer APK
       run: |
         cd fileexplorer
-        chmod +x gradlew 2>/dev/null || true
-        ./gradlew assembleDebug || gradle assembleDebug
+        gradle assembleDebug --no-daemon
         mkdir -p ../apks
-        cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+        cp app/build/outputs/apk/debug/*.apk ../apks/
         
     - name: Build Keyboard APK
       run: |
         cd keyboard
-        chmod +x gradlew 2>/dev/null || true
-        ./gradlew assembleDebug || gradle assembleDebug
+        gradle assembleDebug --no-daemon
         mkdir -p ../apks
-        cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+        cp app/build/outputs/apk/debug/*.apk ../apks/
         
     - name: Upload APKs
       uses: actions/upload-artifact@v4
