@@ -16,7 +16,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.app.R;
-import com.app.adapter.FileAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
