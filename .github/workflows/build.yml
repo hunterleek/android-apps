@@ -1,0 +1,71 @@
+name: Build Android APKs
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Build Messaging APK
+      run: |
+        cd messaging
+        chmod +x gradlew 2>/dev/null || true
+        ./gradlew assembleDebug || gradle assembleDebug
+        mkdir -p ../apks
+        cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+        
+    - name: Build Calling APK
+      run: |
+        cd calling
+        chmod +x gradlew 2>/dev/null || true
+        ./gradlew assembleDebug || gradle assembleDebug
+        mkdir -p ../apks
+        cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+        
+    - name: Build Gallery APK
+      run: |
+        cd gallery
+        chmod +x gradlew 2>/dev/null || true
+        ./gradlew assembleDebug || gradle assembleDebug
+        mkdir -p ../apks
+        cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+        
+    - name: Build File Explorer APK
+      run: |
+        cd fileexplorer
+        chmod +x gradlew 2>/dev/null || true
+        ./gradlew assembleDebug || gradle assembleDebug
+        mkdir -p ../apks
+        cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+        
+    - name: Build Keyboard APK
+      run: |
+        cd keyboard
+        chmod +x gradlew 2>/dev/null || true
+        ./gradlew assembleDebug || gradle assembleDebug
+        mkdir -p ../apks
+        cp app/build/outputs/apk/debug/*.apk ../apks/ || true
+        
+    - name: Upload APKs
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-apps
+        path: apks/*.apk
+        retention-days: 30
