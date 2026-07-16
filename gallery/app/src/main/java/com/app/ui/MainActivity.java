@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         ViewPager2 viewPager = findViewById(R.id.viewPager);
 
+        viewPager.setAdapter(new SimplePagerAdapter(this, 3));
         setupTabs(tabLayout, viewPager);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)

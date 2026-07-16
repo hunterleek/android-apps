@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.app.R;
+import com.app.adapter.FileAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         MaterialButton btnCall = findViewById(R.id.btnCall);
 
         setupDialer();
+        viewPager.setAdapter(new SimplePagerAdapter(this, 3));
         setupTabs(tabLayout, viewPager);
 
         btnCall.setOnClickListener(v -> makeCall());

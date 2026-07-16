@@ -64,12 +64,12 @@ public class MainActivity extends AppCompatActivity implements FileAdapter.OnFil
 
         initViews();
         checkRootAccess();
-        requestPermissions();
         setupNavigation();
         setupToolbar();
         setupRecyclerView();
         setupFab();
         setupSelectionBar();
+        requestPermissions();
     }
 
     private void initViews() {
