@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Edit Photo"
+        app:titleTextColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/imagePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@id/editControls"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:contentDescription="Photo to edit" />
+
+    <LinearLayout
+        android:id="@+id/editControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_dark"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRotate"
+                    style="@style/EditorButton"
+                    android:text="Rotate" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCrop"
+                    style="@style/EditorButton"
+                    android:text="Crop" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFilter"
+                    style="@style/EditorButton"
+                    android:text="Filter" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAdjust"
+                    style="@style/EditorButton"
+                    android:text="Adjust" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEnhance"
+                    style="@style/EditorButton"
+                    android:text="Enhance" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

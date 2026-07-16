@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gallery</string>
+    <string name="photos">Photos</string>
+    <string name="albums">Albums</string>
+    <string name="favorites">Favorites</string>
+    <string name="trash">Trash</string>
+    <string name="search">Search</string>
+    <string name="select">Select</string>
+    <string name="share">Share</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="info">Info</string>
+    <string name="rotate">Rotate</string>
+    <string name="crop">Crop</string>
+    <string name="details">Details</string>
+</resources>

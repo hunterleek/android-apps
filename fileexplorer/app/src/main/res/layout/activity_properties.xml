@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imageIcon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:src="@drawable/ic_folder"
+            android:contentDescription="File icon" />
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:text="filename.txt" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="16dp"
+            android:background="@color/grey_light" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <property_row
+                android:id="@+id/rowSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:key="Size"
+                tools:value="1.5 MB" />
+
+            <property_row
+                android:id="@+id/rowType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:key="Type"
+                tools:value="Text File" />
+
+            <property_row
+                android:id="@+id/rowPath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:key="Path"
+                tools:value="/storage/emulated/0/Download" />
+
+            <property_row
+                android:id="@+id/rowModified"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:key="Modified"
+                tools:value="2024-01-15 10:30 AM" />
+
+            <property_row
+                android:id="@+id/rowCreated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:key="Created"
+                tools:value="2024-01-10 08:00 AM" />
+
+            <property_row
+                android:id="@+id/rowHidden"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:key="Hidden"
+                tools:value="No" />
+
+            <property_row
+                android:id="@+id/rowReadable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:key="Readable"
+                tools:value="Yes" />
+
+            <property_row
+                android:id="@+id/rowWritable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:key="Writable"
+                tools:value="Yes" />
+
+            <property_row
+                android:id="@+id/rowExecutable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:key="Executable"
+                tools:value="No" />
+
+            <property_row
+                android:id="@+id/rowContains"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:key="Contains"
+                tools:value="128 items" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

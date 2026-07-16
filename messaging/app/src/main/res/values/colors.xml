@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="grey_dark">#1A1A1A</color>
+    <color name="grey_medium">#2D2D2D</color>
+    <color name="grey_light">#404040</color>
+    <color name="grey_text">#808080</color>
+    <color name="accent_grey">#333333</color>
+    <color name="message_sent">#2D2D2D</color>
+    <color name="message_received">#1A1A1A</color>
+</resources>

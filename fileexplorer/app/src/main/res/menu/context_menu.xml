@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_copy"
+        android:icon="@drawable/ic_copy"
+        android:title="@string/copy" />
+    <item
+        android:id="@+id/menu_cut"
+        android:icon="@drawable/ic_cut"
+        android:title="@string/cut" />
+    <item
+        android:id="@+id/menu_paste"
+        android:icon="@drawable/ic_paste"
+        android:title="@string/paste" />
+    <item
+        android:id="@+id/menu_rename"
+        android:icon="@drawable/ic_edit"
+        android:title="@string/rename" />
+    <item
+        android:id="@+id/menu_delete"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/delete" />
+    <item
+        android:id="@+id/menu_properties"
+        android:icon="@drawable/ic_info"
+        android:title="@string/properties" />
+    <item
+        android:id="@+id/menu_share"
+        android:icon="@drawable/ic_share"
+        android:title="@string/share" />
+    <item
+        android:id="@+id/menu_compress"
+        android:icon="@drawable/ic_archive"
+        android:title="@string/compress" />
+    <item
+        android:id="@+id/menu_add_to_favorite"
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/favorites" />
+    <item
+        android:id="@+id/menu_select_all"
+        android:icon="@drawable/ic_select_all"
+        android:title="@string/select_all" />
+</menu>
