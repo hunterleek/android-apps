@@ -9,4 +9,17 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:contentDescription="photo" />
+
+    <TextView
+        android:id="@+id/videoBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="4dp"
+        android:background="#000000"
+        android:text="VIDEO"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        android:padding="2dp 4dp"
+        android:visibility="gone" />
 </FrameLayout>

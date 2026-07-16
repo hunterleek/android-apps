@@ -13,12 +13,13 @@ import android.telecom.TelecomManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,14 +151,14 @@ public class MainActivity extends AppCompatActivity {
     class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.VH> {
         List<CallEntry> data;
         CallLogAdapter(List<CallEntry> data) { this.data = data; }
-        @NonNull @Override public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        @Override public VH onCreateViewHolder(ViewGroup parent, int viewType) {
             TextView tv = new TextView(parent.getContext());
             tv.setPadding(24, 24, 24, 24);
             tv.setTextColor(0xFFFFFFFF);
             tv.setTextSize(16);
             return new VH(tv);
         }
-        @Override public void onBindViewHolder(@NonNull VH h, int p) {
+        @Override public void onBindViewHolder(VH h, int p) {
             CallEntry e = data.get(p);
             h.tv.setText(e.number);
             h.tv.setOnClickListener(v -> {

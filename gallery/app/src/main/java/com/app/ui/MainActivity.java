@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -29,16 +28,18 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION = 102;
     private RecyclerView recycler;
     private PhotoAdapter adapter;
-    private List<Photo> photos = new ArrayList<>();
+    private TextView textCount;
+    private List<Media> mediaList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textCount = findViewById(R.id.textCount);
         recycler = findViewById(R.id.recyclerView);
-        adapter = new PhotoAdapter(photos);
         recycler.setLayoutManager(new GridLayoutManager(this, 3));
+        adapter = new PhotoAdapter(mediaList);
         recycler.setAdapter(adapter);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED
@@ -46,62 +47,74 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO}, PERMISSION);
         } else {
-            loadMedia();
+            loadAllMedia();
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION) loadMedia();
+        if (requestCode == PERMISSION) loadAllMedia();
     }
 
-    private void loadMedia() {
-        photos.clear();
-        String[] projection = {MediaStore.Images.Media.DATA, MediaStore.Images.Media.MIME_TYPE};
-        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    private void loadAllMedia() {
+        mediaList.clear();
+        loadBucket(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, false);
+        loadBucket(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, true);
+        adapter.notifyDataSetChanged();
+        textCount.setText(mediaList.size() + " items");
+    }
+
+    private void loadBucket(Uri uri, boolean isVideo) {
+        String col = MediaStore.MediaColumns.DATA;
         Cursor c = null;
         try {
-            c = getContentResolver().query(uri, projection, null, null, MediaStore.Images.Media.DATE_ADDED + " DESC");
+            c = getContentResolver().query(uri, new String[]{col}, null, null, MediaStore.MediaColumns.DATE_ADDED + " DESC");
         } catch (Exception e) {
-            Toast.makeText(this, "Cannot load media: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         if (c != null) {
-            int dataIdx = c.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            int mimeIdx = c.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE);
+            int idx = c.getColumnIndexOrThrow(col);
             while (c.moveToNext()) {
-                String path = c.getString(dataIdx);
-                String mime = c.getString(mimeIdx);
+                String path = c.getString(idx);
                 if (path != null && new File(path).exists()) {
-                    photos.add(new Photo(path, mime));
+                    mediaList.add(new Media(path, isVideo));
                 }
             }
             c.close();
         }
-        adapter.notifyDataSetChanged();
     }
 
-    static class Photo {
-        String path, mime;
-        Photo(String p, String m) { path = p; mime = m; }
+    static class Media {
+        String path;
+        boolean video;
+        Media(String p, boolean v) { path = p; video = v; }
     }
 
     class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.VH> {
-        List<Photo> data;
-        PhotoAdapter(List<Photo> data) { this.data = data; }
-        @NonNull @Override public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        List<Media> data;
+        PhotoAdapter(List<Media> data) { this.data = data; }
+        @Override public VH onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_photo, parent, false);
             return new VH(v);
         }
-        @Override public void onBindViewHolder(@NonNull VH h, int p) {
-            Photo ph = data.get(p);
-            Glide.with(MainActivity.this).load(ph.path).centerCrop().into(h.img);
-            h.itemView.setOnClickListener(v -> Toast.makeText(MainActivity.this, ph.path, Toast.LENGTH_SHORT).show());
+        @Override public void onBindViewHolder(VH h, int p) {
+            Media m = data.get(p);
+            Glide.with(MainActivity.this).load(m.path).centerCrop().into(h.img);
+            h.badge.setVisibility(m.video ? View.VISIBLE : View.GONE);
+            h.itemView.setOnClickListener(v -> {
+                Toast.makeText(MainActivity.this, m.path, Toast.LENGTH_SHORT).show();
+            });
         }
         @Override public int getItemCount() { return data.size(); }
         class VH extends RecyclerView.ViewHolder {
             ImageView img;
-            VH(View v) { super(v); img = v.findViewById(R.id.imageThumbnail); }
+            TextView badge;
+            VH(View v) {
+                super(v);
+                img = v.findViewById(R.id.imageThumbnail);
+                badge = v.findViewById(R.id.videoBadge);
+            }
         }
     }
 }
