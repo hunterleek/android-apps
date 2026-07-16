@@ -1,0 +1,19 @@
+name: Build 5 - Android Container
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: mingc/android-build-box:latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: |
+        for app in messaging calling gallery fileexplorer keyboard; do
+          cd $app && gradle assembleDebug && cd ..
+        done
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with: {name: apk5, path: '**/*.apk'}
