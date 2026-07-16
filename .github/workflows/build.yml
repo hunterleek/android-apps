@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     
     steps:
     - uses: actions/checkout@v4
@@ -19,49 +22,34 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+        cache: gradle
         
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
       
-    - name: Accept Android Licenses
+    - name: Build All APKs
       run: |
-        yes | sdkmanager --licenses || true
+        mkdir -p apks
         
-    - name: Build Messaging APK
-      run: |
-        cd messaging
-        chmod +x gradlew 2>/dev/null || true
-        gradle assembleDebug --no-daemon
-        mkdir -p ../apks
-        cp app/build/outputs/apk/debug/*.apk ../apks/
+        for app in messaging calling gallery fileexplorer keyboard; do
+          echo "=== Building $app ==="
+          cd $app
+          
+          # Create local.properties
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          
+          # Build with Gradle
+          gradle assembleDebug --no-daemon --stacktrace 2>&1 || {
+            echo "Build failed for $app"
+            exit 1
+          }
+          
+          # Copy APK
+          cp app/build/outputs/apk/debug/*.apk ../apks/ 2>/dev/null || true
+          cd ..
+        done
         
-    - name: Build Calling APK
-      run: |
-        cd calling
-        gradle assembleDebug --no-daemon
-        mkdir -p ../apks
-        cp app/build/outputs/apk/debug/*.apk ../apks/
-        
-    - name: Build Gallery APK
-      run: |
-        cd gallery
-        gradle assembleDebug --no-daemon
-        mkdir -p ../apks
-        cp app/build/outputs/apk/debug/*.apk ../apks/
-        
-    - name: Build File Explorer APK
-      run: |
-        cd fileexplorer
-        gradle assembleDebug --no-daemon
-        mkdir -p ../apks
-        cp app/build/outputs/apk/debug/*.apk ../apks/
-        
-    - name: Build Keyboard APK
-      run: |
-        cd keyboard
-        gradle assembleDebug --no-daemon
-        mkdir -p ../apks
-        cp app/build/outputs/apk/debug/*.apk ../apks/
+        ls -la apks/
         
     - name: Upload APKs
       uses: actions/upload-artifact@v4
