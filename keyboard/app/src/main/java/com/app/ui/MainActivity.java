@@ -1,13 +1,12 @@
 package com.app.ui;
 
-import com.app.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.app.R;
 
 public class MainActivity extends AppCompatActivity {
     @Override
